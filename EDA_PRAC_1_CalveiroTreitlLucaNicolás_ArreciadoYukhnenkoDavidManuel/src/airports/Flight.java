@@ -58,7 +58,7 @@ public class Flight {
         } else {
             this.origin = origin;
             this.destination = destination;
-            +
+
         }
 
         if (departure.getDate() >= arrival.getDate()){
@@ -95,8 +95,12 @@ public class Flight {
 
 
     public void land (Aircraft a){
+        if (a == null){
+            throw new NullPointerException("the parameter is null");
+        } else {
+            
+        }
     }
-
 	/* When an aircraft lands, it is stored in the airport. This method throws
 	   - a NullPointerException if the parameter is null
 	   - an AlreadyInAirportException  if the airport already contains the same aircraft
