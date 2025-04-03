@@ -5,7 +5,7 @@ import flyingObjects.Aircraft;
 
 import java.util.Date;
 
-public class Flight {
+public class Flight implements  ScheduledTravel {
     /*TODO: Ensure that flight implements interface ScheduledTravel*/
 
     private String id;
@@ -31,24 +31,55 @@ public class Flight {
      * @param departure
      * @param arrival
      */
-    public Flight(String id, Aircraft aircraft, String origin, String destination, Date departure, Date arrival){
+    public Flight(String id, Aircraft aircraft, String origin, String destination, Date departure, Date arrival) {
         /*COMPLETE*/
+        if (id == null || aircraft == null) throw new IllegalArgumentException("id or aircraft is null");
+        if(departure == null || arrival == null) throw new FlightScheduleException("departure or arrival is null");
+        if(destination == null || origin == null)  throw new FlightScheduleException("destination or origin is null");
+        if(departure.getTime()<=arrival.getTime()) throw new FlightScheduleException("departure time can't be later than the arrival time");
+
+        this.id = id;
+        this.aircraft = aircraft;
+        this.origin = origin;
+        this.destination = destination;
+        this.departure = departure;
+        this.arrival = arrival;
     }
 
     /*COMPLETE*/
-
+    public String getId(){
+        return id;
+    }
+    public Aircraft getAircraft(){
+        return aircraft;
+    }
+    public String getOrigin(){
+        return origin;
+    }
+    public String getDestination(){
+        return destination;
+    }
     /**
      * Two flights are equal if their id is the same (case insensitive).
-     * @param o
+     * @param
      * @return true if both flights have the same id, false otherwise
      */
     @Override
     public boolean equals(Object o){
         /*COMPLETE*/
-        return false; //Change as appropriate
+        return id.equalsIgnoreCase(((Flight)o).getId()); //Change as appropriate
     }
 
 
+    @Override
+    public Date getDepartureTime() {
+        return departure;
+    }
+
+    @Override
+    public Date getArrivalTime() {
+        return arrival;
+    }
 }
 
 
