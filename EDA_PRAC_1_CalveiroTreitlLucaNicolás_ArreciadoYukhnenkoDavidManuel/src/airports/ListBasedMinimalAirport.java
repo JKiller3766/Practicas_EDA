@@ -42,7 +42,13 @@ public class ListBasedMinimalAirport implements  MinimalAirport {
 
 	@Override
 	public boolean isEmpty() {
-		return false;
+		try {
+			scheduledFlights.getFirst();
+			return false;
+		}
+		catch (NoSuchElementException e){
+			return true;
+		}
 	}
 
 	@Override
@@ -52,26 +58,41 @@ public class ListBasedMinimalAirport implements  MinimalAirport {
 
 	@Override
 	public void land(Aircraft a) {
-
+		if(a == null) throw new NullPointerException("The aircraft is null");
+		if(isFull()) throw new FullAirportException("Airport is full");
+		if(infrastructure.contains(a)) throw new AlreadyInAirportException("Airplane already on the airport");
+		infrastructure.add(a);
 	}
 
 	@Override
 	public void takeOff(Aircraft a) {
-
+		if (a == null) throw new NullPointerException("Aircraft is null");
+		if(!infrastructure.contains(a)) throw new NotInAirportException("Airplane is not on the airport");
+		infrastructure.remove(a);
 	}
 
 	@Override
 	public void addFlight(Flight f) {
-
+		if (f == null) throw new NullPointerException("Flight is null");
+		if (f.getOrigin().equals(airportId) || f.getDestination().equals(airportId)) throw new FlightScheduleException("Flight does not depart from or arrives at the airport");
+		if(scheduledFlights.contains(f)) throw new FlightAlreadyExistsException();
+		scheduledFlights.add(f);
 	}
 
 	@Override
 	public void takeOff(Flight f) {
-
+		if (f == null) throw new NullPointerException("Flight is null");
+		if(!scheduledFlights.contains(f)) throw new NotInAirportException("Flight is not registered in the airport");
+		if(!f.getOrigin().equals(airportId)) throw new FlightScheduleException("Flight does not depart from the current airport");
+		if(!scheduledFlights.remove(f)) throw new FlightScheduleException("Flight is not at the airport");
 	}
 
 	@Override
 	public void land(Flight f) {
+		if (f == null) throw new NullPointerException("Flight is null");
+		if(!scheduledFlights.contains(f)) throw new NotInAirportException("Flight is not registered in the airport");
+		if(!f.getDestination().equals(airportId)) throw new FlightScheduleException("Flight does not depart from the current airport");
+		if(!scheduledFlights.add(f)) throw new FlightScheduleException("Flight is not at the airport");
 
 	}
 
