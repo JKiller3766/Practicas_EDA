@@ -61,7 +61,7 @@ public class Flight implements  ScheduledTravel {
 
         }
 
-        if (departure.getDate() >= arrival.getDate()) {
+        if (departure.getTime() >= arrival.getTime()) {
             throw new FlightScheduleException(" departure date is later than or equal to arrival date");
         }
     }

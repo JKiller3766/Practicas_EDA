@@ -4,6 +4,7 @@ import airports.exceptions.*;
 import flyingObjects.Aircraft;
 
 import java.util.*;
+import java.util.stream.Collector;
 
 public class ListBasedMinimalAirport implements  MinimalAirport {
 
@@ -42,13 +43,7 @@ public class ListBasedMinimalAirport implements  MinimalAirport {
 
 	@Override
 	public boolean isEmpty() {
-		try {
-			scheduledFlights.getFirst();
-			return false;
-		}
-		catch (NoSuchElementException e){
-			return true;
-		}
+		return size() == 0;
 	}
 
 	@Override
@@ -98,17 +93,23 @@ public class ListBasedMinimalAirport implements  MinimalAirport {
 
 	@Override
 	public Flight[] byFlightDepartureTime() {
-		return new Flight[0];
+		Flight[] byFlightDepartureTime = scheduledFlights.toArray(new Flight[0]);
+		Arrays.sort(byFlightDepartureTime, new DepartureTimesComparator());
+		return byFlightDepartureTime;
 	}
 
 	@Override
 	public Aircraft[] byAircraftName() {
-		return new Aircraft[0];
+		Aircraft[] byAircraftName = infrastructure.toArray(new Aircraft[0]);
+		Arrays.sort(byAircraftName, new AircraftByNameComparator());
+		return byAircraftName;
 	}
 
 	@Override
 	public Aircraft[] allAircrafts() {
-		return new Aircraft[0];
+		Aircraft[] allAircrafts = infrastructure.toArray(new Aircraft[0]);
+		Arrays.sort(allAircrafts);
+		return allAircrafts;
 	}
 
 	/* COMPLETE */
