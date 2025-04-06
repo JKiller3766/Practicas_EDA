@@ -69,7 +69,7 @@ public class ListBasedMinimalAirport implements  MinimalAirport {
 	@Override
 	public void addFlight(Flight f) {
 		if (f == null) throw new NullPointerException("Flight is null");
-		if (f.getOrigin().equals(airportId) || f.getDestination().equals(airportId)) throw new FlightScheduleException("Flight does not depart from or arrives at the airport");
+		if (!(f.getOrigin().equals(airportId) || f.getDestination().equals(airportId))) throw new FlightScheduleException("Flight does not depart from or arrives at the airport");
 		if(scheduledFlights.contains(f)) throw new FlightAlreadyExistsException();
 		scheduledFlights.add(f);
 	}
