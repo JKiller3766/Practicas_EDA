@@ -54,9 +54,9 @@ public class ListBasedMinimalAirport implements  MinimalAirport {
 	@Override
 	public void land(Aircraft a) {
 		if(a == null) throw new NullPointerException("The aircraft is null");
-		if(isFull()) throw new FullAirportException("Airport is full");
-		if(infrastructure.contains(a)) throw new AlreadyInAirportException("Airplane already on the airport");
-		infrastructure.add(a);
+		else if(isFull()) throw new FullAirportException("Airport is full");
+		else if(infrastructure.contains(a)) throw new AlreadyInAirportException("Airplane already on the airport");
+		else infrastructure.add(a);
 	}
 
 	@Override
@@ -79,14 +79,14 @@ public class ListBasedMinimalAirport implements  MinimalAirport {
 		if (f == null) throw new NullPointerException("Flight is null");
 		if(!scheduledFlights.contains(f)) throw new NotInAirportException("Flight is not registered in the airport");
 		if(!f.getOrigin().equals(airportId)) throw new FlightScheduleException("Flight does not depart from the current airport");
-		if(!scheduledFlights.remove(f)) throw new FlightScheduleException("Flight is not at the airport");
+		if(!scheduledFlights.remove(f)) throw new FlightScheduleException("Flight can not be removed");
 	}
 
 	@Override
 	public void land(Flight f) {
 		if (f == null) throw new NullPointerException("Flight is null");
 		if(!scheduledFlights.contains(f)) throw new NotInAirportException("Flight is not registered in the airport");
-		if(!f.getDestination().equals(airportId)) throw new FlightScheduleException("Flight does not depart from the current airport");
+		if(!f.getOrigin().equals(airportId)) throw new FlightScheduleException("Flight does not depart from the current airport");
 		if(!scheduledFlights.add(f)) throw new FlightScheduleException("Flight is not at the airport");
 
 	}
