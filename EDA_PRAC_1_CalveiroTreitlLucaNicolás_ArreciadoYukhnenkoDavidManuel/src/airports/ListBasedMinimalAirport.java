@@ -54,9 +54,9 @@ public class ListBasedMinimalAirport implements  MinimalAirport {
 	@Override
 	public void land(Aircraft a) {
 		if(a == null) throw new NullPointerException("The aircraft is null");
-		else if(isFull()) throw new FullAirportException("Airport is full");
-		else if(infrastructure.contains(a)) throw new AlreadyInAirportException("Airplane already on the airport");
-		else infrastructure.add(a);
+		if(isFull()) throw new FullAirportException("Airport is full");
+		if(infrastructure.contains(a)) throw new AlreadyInAirportException("Airplane already on the airport");
+		infrastructure.add(a);
 	}
 
 	@Override
