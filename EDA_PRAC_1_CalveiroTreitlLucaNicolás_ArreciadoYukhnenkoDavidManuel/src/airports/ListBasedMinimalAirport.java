@@ -80,7 +80,7 @@ public class ListBasedMinimalAirport implements  MinimalAirport {
 		if(!scheduledFlights.contains(f)) throw new NotInAirportException("Flight is not registered in the airport");
 		if(!f.getOrigin().equals(airportId)) throw new FlightScheduleException("Flight does not depart from the current airport");
 		if(!scheduledFlights.remove(f)) throw new FlightScheduleException("Flight can not be removed");
-		infrastructure.remove(f.getAircraft());
+		takeOff(f.getAircraft());
 	}
 
 	@Override
