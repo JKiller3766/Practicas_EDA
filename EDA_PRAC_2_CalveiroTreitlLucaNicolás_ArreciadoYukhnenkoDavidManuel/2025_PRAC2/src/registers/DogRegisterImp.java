@@ -6,7 +6,6 @@ import dogs.DogPurpose;
 
 import java.lang.classfile.Interfaces;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.SortedSet;
 
 public class DogRegisterImp implements  DogRegister{
@@ -59,23 +58,27 @@ public class DogRegisterImp implements  DogRegister{
 
     @Override
     public SortedSet<Dog> registeredDogs(String owner) {
+
         SortedSet<Dog> dogs = null;
+
         for (String currentOwner : MapDogs.keySet()) {
             if (currentOwner.equals(owner)) {
                 dogs.add(MapDogs.get(currentOwner));
             }
-
         }
+
         return dogs;
+
     }
 
     @Override
     public SortedSet<String> findPurposeOwners(DogPurpose purpose) {
         SortedSet<String> owners = null;
-        for (){
+        for (Dog currentDog : MapDogs.values()) {
+            if (currentDog.getType().equals(purpose)) {
+                owners.add(findOwner(currentDog.getId()));
             }
-        return null;
+        }
+        return owners;
     }
-
-
 }
