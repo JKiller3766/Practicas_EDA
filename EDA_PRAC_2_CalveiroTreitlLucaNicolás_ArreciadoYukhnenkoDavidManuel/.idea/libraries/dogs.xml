@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="dogs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/2025_PRAC2/lib/dogs.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

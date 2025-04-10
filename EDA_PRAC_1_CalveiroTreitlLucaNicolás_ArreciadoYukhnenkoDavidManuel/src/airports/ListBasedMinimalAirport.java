@@ -16,8 +16,8 @@ public class ListBasedMinimalAirport implements  MinimalAirport {
 	
 	public ListBasedMinimalAirport ()  {
 		airportId = "BCN";
-		scheduledFlights = new LinkedList<>();
-		infrastructure = new ArrayList<>();
+		scheduledFlights = new LinkedList<Flight>();
+		infrastructure = new ArrayList<Aircraft>();
 		/*COMPLETE*/
 	}
 
