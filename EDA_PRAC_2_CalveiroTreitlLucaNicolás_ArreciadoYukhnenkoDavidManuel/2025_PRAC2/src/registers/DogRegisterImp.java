@@ -9,9 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.SortedSet;
 
 public class DogRegisterImp implements  DogRegister{
-    interface MapDogs<K,V>{
-    }
-    private LinkedHashMap<String,Dog> MapDogs;
+    private LinkedHashMap<String,Dog> MapDogs = new LinkedHashMap<>();
     @Override
     public boolean registerOwner(String owner) {
 
@@ -46,12 +44,13 @@ public class DogRegisterImp implements  DogRegister{
 
     @Override
     public String findOwner(DogID id) {
-        Dog dog;
-        for (String owner : MapDogs.keySet()) {
-            dog = MapDogs.get(owner);
-            if (dog.getId().equals(id)) {
-                return owner;
+        for (String currentOwner : MapDogs.keySet()) {
+            for (Dog currentDog : MapDogs.values()){
+                if(currentDog.getId().equals(id)){
+                    return currentOwner;
+                }
             }
+
         }
         return null;
     }
