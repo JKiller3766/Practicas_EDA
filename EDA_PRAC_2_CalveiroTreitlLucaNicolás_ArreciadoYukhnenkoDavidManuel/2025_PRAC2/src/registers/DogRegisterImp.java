@@ -4,12 +4,16 @@ import dogs.Dog;
 import dogs.DogID;
 import dogs.DogPurpose;
 
-import java.lang.classfile.Interfaces;
-import java.util.LinkedHashMap;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.SortedSet;
 
 public class DogRegisterImp implements  DogRegister{
-    private LinkedHashMap<String,Dog> MapDogs = new LinkedHashMap<>();
+    Map<String,Dog> MapDogs;
+    public DogRegisterImp() {
+        MapDogs = new HashMap<String,Dog>();
+    }
     @Override
     public boolean registerOwner(String owner) {
 
