@@ -5,8 +5,6 @@ import dogs.DogID;
 import dogs.DogPurpose;
 
 import java.util.*;
-import java.util.TreeSet;
-import java.util.SortedSet;
 
 public class DogRegisterImp implements  DogRegister{
     Map<String,List<Dog>> mapDogs;
@@ -37,14 +35,14 @@ public class DogRegisterImp implements  DogRegister{
     }
 
     for (Dog currentDog : mapDogs.get(owner)) {
-        if(currentDog == dog){
+        if(currentDog.equals(dog)){
             return false;
         }
     }
 
     for (String currentOwner : mapDogs.keySet()){
         for (Dog currentDog : mapDogs.get(currentOwner)) {
-            if(currentDog == dog){
+            if(currentDog.equals(dog)){
                 throw new DifferentOwnerException();
             }
         }
@@ -83,7 +81,6 @@ public class DogRegisterImp implements  DogRegister{
     @Override
     public SortedSet<String> findPurposeOwners(DogPurpose purpose) {
         SortedSet<String> owners = new TreeSet<>();
-        String owner;
 
         for (String currentOwner: mapDogs.keySet()){
             for (Dog currentDog : mapDogs.get(currentOwner)){
