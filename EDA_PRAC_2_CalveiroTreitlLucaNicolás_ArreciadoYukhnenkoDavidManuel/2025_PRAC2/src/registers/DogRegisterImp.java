@@ -4,21 +4,24 @@ import dogs.Dog;
 import dogs.DogID;
 import dogs.DogPurpose;
 
-
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.TreeSet;
 import java.util.SortedSet;
 
 public class DogRegisterImp implements  DogRegister{
-    Map<String,Dog> MapDogs;
+    Map<String,List<Dog>> mapDogs;
+
+
     public DogRegisterImp() {
-        MapDogs = new HashMap<String,Dog>();
+        mapDogs = new HashMap<>();
     }
+
+
     @Override
     public boolean registerOwner(String owner) {
 
-    if(!MapDogs.containsKey(owner)) {
-        MapDogs.put(owner, null);
+    if(!mapDogs.containsKey(owner)) {
+        mapDogs.put(owner, new ArrayList<Dog>());
         return true;
     }
 
@@ -29,32 +32,36 @@ public class DogRegisterImp implements  DogRegister{
     @Override
     public boolean registerDog(String owner, Dog dog) {
 
-    if(!MapDogs.containsKey(owner)) {
+    if(!mapDogs.containsKey(owner)) {
         throw new UnknownOwnerException("Owner not found");
     }
 
-    if(MapDogs.get(owner) == dog){
-        return false;
+    for (Dog currentDog : mapDogs.get(owner)) {
+        if(currentDog == dog){
+            return false;
+        }
     }
 
-    if(MapDogs.containsValue(dog)) {
-        throw new DifferentOwnerException();
+    for (String currentOwner : mapDogs.keySet()){
+        for (Dog currentDog : mapDogs.get(currentOwner)) {
+            if(currentDog == dog){
+                throw new DifferentOwnerException();
+            }
+        }
     }
-
-    MapDogs.put(owner,dog);
+    mapDogs.get(owner).add(dog);
     return true;
 
     }
 
     @Override
     public String findOwner(DogID id) {
-        for (String currentOwner : MapDogs.keySet()) {
-            for (Dog currentDog : MapDogs.values()){
+        for (String currentOwner : mapDogs.keySet()) {
+            for (Dog currentDog : mapDogs.get(currentOwner)){
                 if(currentDog.getId().equals(id)){
                     return currentOwner;
                 }
             }
-
         }
         return null;
     }
@@ -62,11 +69,10 @@ public class DogRegisterImp implements  DogRegister{
     @Override
     public SortedSet<Dog> registeredDogs(String owner) {
 
-        SortedSet<Dog> dogs = null;
-
-        for (String currentOwner : MapDogs.keySet()) {
-            if (currentOwner.equals(owner)) {
-                dogs.add(MapDogs.get(currentOwner));
+        SortedSet<Dog> dogs = new TreeSet<>();
+        for (Dog currentDog : mapDogs.get(owner)) {
+            if (currentDog != null) {
+                dogs.add(currentDog);
             }
         }
 
@@ -76,12 +82,17 @@ public class DogRegisterImp implements  DogRegister{
 
     @Override
     public SortedSet<String> findPurposeOwners(DogPurpose purpose) {
-        SortedSet<String> owners = null;
-        for (Dog currentDog : MapDogs.values()) {
-            if (currentDog.getType().equals(purpose)) {
-                owners.add(findOwner(currentDog.getId()));
+        SortedSet<String> owners = new TreeSet<>();
+        String owner;
+
+        for (String currentOwner: mapDogs.keySet()){
+            for (Dog currentDog : mapDogs.get(currentOwner)){
+                if (currentDog.getType().equals(purpose)){
+                    owners.add(currentOwner);
+                }
             }
         }
+
         return owners;
     }
 }
