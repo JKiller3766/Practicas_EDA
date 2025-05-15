@@ -9,14 +9,28 @@ public class Exer_03_Palindromes {
 	private static String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	
 	public static void main (String [] args) {
+		String palindrome;
+		String noPalindrome;
 		/* COMPLETE */
 		// Using functions genPalindrom and genNoPalindrom, test your code here
+		palindrome = genPalindrome();
+		noPalindrome = genNoPalindrome();
 
+		System.out.println("Palindrom: " + palindrome +" " + isPalindrome(palindrome, 0, palindrome.length()-1));
+		System.out.println("No Palindrom: " + noPalindrome +" "+ isPalindrome(noPalindrome, 0, noPalindrome.length()-1));
 	}
 	
 	/* COMPLETE */
 	// write here the code to determine whether a string is a palindrome or not
+public static boolean isPalindrome(String  paraula, int posInici, int posFinal) {
+		// base case
+		if (posInici >= posFinal) return true;
 
+		if (paraula.charAt(posInici) != paraula.charAt(posFinal)) return false;
+
+		return isPalindrome(paraula, posInici + 1, posFinal - 1);
+
+}
 	
 	/*DO NOT MODIFY CODE BELOW*/
 	private static String genPalindrome() {
