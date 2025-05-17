@@ -6,13 +6,30 @@ public class Exer_04_Hamming {
 
 
     public static void main (String [] args) {
-        /* COMPLETE */
+        /* COMPLETE */int num;
+    for (int i = 0; i<10; i++){
+        num = genHamming();
+        System.out.println("Numero de Hamming: "+num + " ,és un numero de Hamming realment? " + isNumHamming(num));
+        }
 
+    for (int i = 0; i<10; i++){
+        num = genNotHamming();
+        System.out.println("Numero que no es de Hamming: "+num + " ,és un numero de Hamming realment? " + isNumHamming(num));
     }
+}
+
 
     /* COMPLETE */
     // write here the code to determine whether a number is a Hamming number or not
+    private static boolean isNumHamming(int num){
+        if(num == 1) return true;
 
+        if(num%2 == 0) return isNumHamming(num/2);
+        if(num%3 == 0) return isNumHamming(num/3);
+        if(num%5 == 0) return isNumHamming(num/5);
+
+        return false;
+    }
 
     /*DO NOT MODIFY CODE BELOW*/
     private static int genHamming(){
