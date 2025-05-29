@@ -106,8 +106,19 @@ public class TextAnalysis {
 		
 		
 		/* COMPLETE 1 */
-		
-		return null; //Change appropriately
+		TreeMap<Integer, List<String>> processedsLines = new TreeMap<Integer, List<String>>();
+		BufferedReader brLines = new BufferedReader(new FileReader(f));
+		int order = 1;
+		String [] palabras = brLines.readLine().split("[\\\\s!?\\\"\\',;:.-]+");
+		for(String palabra: palabras) {
+				if (palabra.length()>2 && palabra.equals(palabra.toUpperCase())) {
+					processedsLines.put(order, new ArrayList<String>());
+					processedsLines.get(order).add(palabra);
+				}
+			order++;
+			palabras = brLines.readLine().split("[\\\\s!?\\\"\\',;:.-]+");
+		}
+		return processedsLines; //Change appropriately
 		
 	}
 	
