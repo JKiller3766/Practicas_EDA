@@ -112,8 +112,13 @@ public class TextAnalysis {
 		String [] palabras = brLines.readLine().split("[\\\\s!?\\\"\\',;:.-]+");
 		for(String palabra: palabras) {
 				if (palabra.length()>2 && palabra.equals(palabra.toUpperCase())) {
-					processedsLines.put(order, new ArrayList<String>());
-					processedsLines.get(order).add(palabra);
+					try{
+						processedsLines.get(order).add(palabra);
+					}
+					catch (Exception e){
+						processedsLines.put(order, new ArrayList<String>());
+						processedsLines.get(order).add(palabra);
+					}
 				}
 				palabras = brLines.readLine().split("[\\\\s!?\\\"\\',;:.-]+");
 				order++;
