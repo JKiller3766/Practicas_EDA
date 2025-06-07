@@ -115,8 +115,8 @@ public class TextAnalysis {
 					processedsLines.put(order, new ArrayList<String>());
 					processedsLines.get(order).add(palabra);
 				}
-			order++;
-			palabras = brLines.readLine().split("[\\\\s!?\\\"\\',;:.-]+");
+				palabras = brLines.readLine().split("[\\\\s!?\\\"\\',;:.-]+");
+				order++;
 		}
 		return processedsLines; //Change appropriately
 		
