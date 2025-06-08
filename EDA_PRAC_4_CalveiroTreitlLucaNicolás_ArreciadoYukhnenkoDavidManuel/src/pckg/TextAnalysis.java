@@ -110,7 +110,8 @@ public class TextAnalysis {
 		BufferedReader brLines = new BufferedReader(new FileReader(f));
 		int order = 1;
 		String [] palabras = brLines.readLine().split("[\\\\s!?\\\"\\',;:.-]+");
-		for(String palabra: palabras) {
+		while (palabras!=null){
+			for(String palabra: palabras) {
 				if (palabra.length()>2 && palabra.equals(palabra.toUpperCase())) {
 					try{
 						processedsLines.get(order).add(palabra);
@@ -122,6 +123,7 @@ public class TextAnalysis {
 				}
 				palabras = brLines.readLine().split("[\\\\s!?\\\"\\',;:.-]+");
 				order++;
+			}
 		}
 		return processedsLines; //Change appropriately
 		
@@ -133,8 +135,21 @@ public class TextAnalysis {
 		   are lists containing the words to be counted */
 		
 		/* COMPLETE 2 */
-
-		return null; //Change appropriately
+		TreeMap<String, Integer> numeroParaules = new TreeMap<String, Integer>();
+		int contador = 0;
+		int numRep = 1;
+		for (List<String> palabras : lc.values()){
+			for(String palabra: palabras){
+				if(palabra.equals(palabras.get(contador))){
+					numeroParaules.put(palabra, numRep);
+					numRep++;
+				}
+				contador++;
+			}
+			numRep = 1;
+			contador = 0;
+		}
+		return numeroParaules; //Change appropriately
 	}
 
 
@@ -169,7 +184,7 @@ public class TextAnalysis {
 		   of the file expected by procedure textFileToMap */
 		
 		/* COMPLETE 3 */
-
+		
 	}
 	
 	
