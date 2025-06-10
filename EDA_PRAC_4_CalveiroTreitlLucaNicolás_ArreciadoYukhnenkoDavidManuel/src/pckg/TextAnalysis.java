@@ -175,18 +175,25 @@ public class TextAnalysis {
 		}
 		dos.close();
 	}
-	
 	private static void mapToTextFile (TreeMap<String, Integer> map, File f) throws IOException {
-		/* This procedure saves into a text file (second parameter 
-		   contains its path) the contents of the given map (first
-		   parameter).
-		   The format of this file has to be compatible with the format
-		   of the file expected by procedure textFileToMap */
+		/* This procedure saves into a text file (second parameter contains its path) the contents of the given map (first parameter).
+		   The format of this file has to be compatible with the format of the file expected by procedure textFileToMap */
 		
 		/* COMPLETE 3 */
-		
+
+		BufferedWriter writer = new BufferedWriter(new FileWriter(f));
+
+		for (String s : map.keySet()) {
+			writer.write(s);
+			writer.newLine();
+			writer.write(map.get(s).toString());
+			writer.newLine();
+
+		}
+
+		writer.close();
+
 	}
-	
 	
 	// ------------------ RETRIEVE procedures --------------
 	
@@ -208,16 +215,34 @@ public class TextAnalysis {
 		return result;
 	}
 	
-	
 	private static TreeMap<Integer, List<String>> binFileToMap (File f) throws IOException {
-		/* This procedure retrieves a map, from a bin file produced by
-		 * mapToBinFile. Actually the map is created empty and then populated
-		 * with the information retrieved from the file */
+		/* This procedure retrieves a map, from a bin file produced by mapToBinFile.
+		Actually the map is created empty and then populated with the information retrieved from the file */
 		
 		/* COMPLETE 4 */
 
-		return null; //Change appropriately
-		
+		TreeMap<Integer, List<String>> map = new TreeMap<>();
+		DataInputStream input = new DataInputStream(new BufferedInputStream(new FileInputStream(f)));
+		Integer num = input.readInt();
+		Integer size;
+		List<String> list;
+
+		try {
+			while (true) { /*Se que no se supone que usemos while(true), pero en el powerpoint de clase
+				dice que para los archivos binarios se hace así*/
+				size = input.readInt();
+				list = new LinkedList<>();
+				for (int i = 0; i < size; i++) {
+					list.add(input.readUTF());
+				}
+				if (!list.isEmpty()){
+					map.put(num, list);
+				}
+				num = input.readInt();
+			}
+		} catch (EOFException e) {
+			return map;
+		}
 	}
 	
 }
